@@ -1,0 +1,51 @@
+<html>
+<head>
+<title>Friends</title>
+</head>
+<body>
+    <a href ="/logout">Logout</a>
+    <h1>Hello, {{ alias }} !</h1>
+
+  <table>
+    {% if friends%}
+        <h3>Here is the list of your friends:</h3>
+    {% else %}
+        <h3>You don't have friends yet:</h3>
+    {% endif %}
+    <tr>
+        <th>Alias</th>
+        <th>Action</th>
+    </tr>
+    {% for friend in friends %}
+    <tr>
+        <td>{{ friend.alias }}</td>
+        <td>
+          <a href = "/users/{{user.id}}">View Profile</a>
+          <a href = "/remove/{{friend.id}}">Remove as friend</a>
+        </td>
+    </tr>
+    {%endfor%}
+  </table>
+
+  <table>
+    <h3>Other Users not on your friend's list:</h3>
+      <tr>
+          <th>Alias</th>
+          <th>Action</th>
+      </tr>
+          {% for user in users %}
+          <tr>
+              <td><a href='/users/{{user.id}}'>{{user.alias}}</a></td>
+              <td>
+                  <form action='/users/add/{{user.id}}' method='post'>
+                      {% csrf_token %}
+                      <input type='submit' value='Add as Friend'>
+                  </form>
+              </td>
+          </tr>
+          {% endfor %}
+  </table>
+
+
+</body>
+</html>
